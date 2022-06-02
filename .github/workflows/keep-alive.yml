@@ -20,15 +20,40 @@ jobs:
         with:
           ref: master
 
+      - name: Get date from 50 days ago
+        run: |
+          datethen = `date -d "-50 days" --utc +%FT%TZ`
+          echo "datelimit=$datethen" >> $GITHUB_ENV
+
+      - name: Try new way
+        if: github.event.base.repo.updated_at <= env.datelimit
+        run:
+          echo "run empty commit"
+
       - name: Try all in 1
         if: github.event.created_at >= github.event.base.repo.updated_at
         run:
           echo "yes please"
 
-      - name: Try all in 1
+      - name: Try all in 1 but this should fail
         if: github.event.created_at < github.event.base.repo.updated_at
         run:
           echo "Oh no :("
+
+      - name: Try new way
+        if: github.event.base.repo.updated_at <= env.datelimit
+        run:
+          echo "run empty commit"
+
+      - name: Get date from 2 days ago
+        run: |
+          datethen2 = `date -d "-50 days" --utc +%FT%TZ`
+          echo "datelimit=$datethen2" >> $GITHUB_ENV
+
+      - name: Try new way
+        if: github.event.base.repo.updated_at <= env.datelimit2
+        run:
+          echo "run empty commit (should trigger)"
 
       - name: Set flag if last commit is more than 50 days old
 
