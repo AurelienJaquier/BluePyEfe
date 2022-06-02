@@ -17,13 +17,27 @@ jobs:
         with:
           ref: master
 
+      - name: Set flag if last commit is more than 50 days old
+        env:
+          COMMIT_DATE: ${{ github.event.commits[0].timestamp }}
+        run: |
+          condition=`date -d "-50 days"`
+          if [${COMMIT_DATE} -le $condition];
+          then
+            echo "flag=true" >> $GITHUB_ENV
+          else
+            echo "flag=false" >> $GITHUB_ENV
+          fi
+
       - name: setup git config
+        if: env.flag
         run: |
           # setup the username and email.
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
 
       - name: commit
+        if: env.flag
         run: |
           git commit -m "Empty commit to keep the gihub workflows alive" --allow-empty
           git push origin master
