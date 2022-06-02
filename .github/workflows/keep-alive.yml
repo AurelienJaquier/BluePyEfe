@@ -26,7 +26,7 @@ jobs:
           condition=`date -d "-50 days"`
           echo ${COMMIT_DATE}
           echo $condition
-          if [${COMMIT_DATE} -le $condition];
+          if [ ${COMMIT_DATE} -le $condition ];
           then
             echo "flag=true" >> $GITHUB_ENV
             echo "flag set to true"
