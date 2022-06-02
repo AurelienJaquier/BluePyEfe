@@ -24,7 +24,7 @@ jobs:
           COMMIT_DATE: ${{ github.event.head_commit.message }}
         run: |
           condition=`date -d "-50 days"`
-          echo ${COMMIT_DATE}
+          echo "${COMMIT_DATE}"
           echo $condition
           if [ ${COMMIT_DATE} -le $condition ];
           then
