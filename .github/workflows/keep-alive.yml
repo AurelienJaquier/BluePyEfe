@@ -22,7 +22,7 @@ jobs:
 
       - name: Get date from 50 days ago
         run: |
-          datethen = `date -d "-50 days" --utc +%FT%TZ`
+          datethen=`date -d "-50 days" --utc +%FT%TZ`
           echo "datelimit=$datethen" >> $GITHUB_ENV
 
       - name: Try new way
@@ -47,7 +47,7 @@ jobs:
 
       - name: Get date from 2 days ago
         run: |
-          datethen2 = `date -d "-50 days" --utc +%FT%TZ`
+          datethen2=`date -d "-50 days" --utc +%FT%TZ`
           echo "datelimit=$datethen2" >> $GITHUB_ENV
 
       - name: Try new way
