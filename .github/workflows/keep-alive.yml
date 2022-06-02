@@ -25,7 +25,7 @@ jobs:
           COMMIT_DATE: ${{ github.event.head_commit.message }}
         run: |
           echo ${{ github.event.created_at }}
-          echo ${{ github.event.base.updated_at }}
+          echo ${{ github.event.base.repo.updated_at }}
 
           echo ${{ github.event.created_at }} - ${{ github.event.base.updated_at }}
 
