@@ -20,6 +20,16 @@ jobs:
         with:
           ref: master
 
+      - name: Try all in 1
+        if: github.event.created_at >= github.event.base.repo.updated_at
+        run:
+          echo "yes please"
+
+      - name: Try all in 1
+        if: github.event.created_at < github.event.base.repo.updated_at
+        run:
+          echo "Oh no :("
+
       - name: Set flag if last commit is more than 50 days old
         env:
           COMMIT_DATE: ${{ github.event.head_commit.message }}
