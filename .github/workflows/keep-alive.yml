@@ -8,8 +8,9 @@ on:
     - cron: '0 3 * * SUN'
 
 jobs:
-  call-test-workflow:
-    uses: BlueBrain/BluePyEfe/.github/workflows/test.yml@master
+  # uncommmment this before merging
+  # call-test-workflow:
+  #   uses: BlueBrain/BluePyEfe/.github/workflows/test.yml@master
   
   keep-workflow-alive:
     name: Keep workflow alive
