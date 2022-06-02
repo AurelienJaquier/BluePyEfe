@@ -19,28 +19,26 @@ jobs:
         with:
           ref: master
 
-      - name: Dump github context
-        run:   echo "$GITHUB_CONTEXT"
-        shell: bash
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-
-
       - name: Set flag if last commit is more than 50 days old
         env:
           COMMIT_DATE: ${{ github.event.head_commit.message }}
         run: |
-          condition=`date -d "-50 days"`
-          echo "${COMMIT_DATE}"
-          echo $condition
-          if [ ${COMMIT_DATE} -le $condition ];
-          then
-            echo "flag=true" >> $GITHUB_ENV
-            echo "flag set to true"
-          else
-            echo "flag=false" >> $GITHUB_ENV
-            echo "flag set to false"
-          fi
+          echo "${{ github.event.created_at }}"
+          echo "${{ github.event.base.updated_at }}"
+
+          echo ${{ github.event.created_at }} - ${{ github.event.base.updated_at }}
+
+          # condition=`date -d "-50 days"`
+          # echo "${COMMIT_DATE}"
+          # echo $condition
+          # if [ ${COMMIT_DATE} -le $condition ];
+          # then
+          #   echo "flag=true" >> $GITHUB_ENV
+          #   echo "flag set to true"
+          # else
+          #   echo "flag=false" >> $GITHUB_ENV
+          #   echo "flag set to false"
+          # fi
 
       - name: setup git config
         if: env.flag
