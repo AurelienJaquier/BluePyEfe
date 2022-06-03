@@ -25,66 +25,20 @@ jobs:
           datethen=`date -d "-50 days" --utc +%FT%TZ`
           echo "datelimit=$datethen" >> $GITHUB_ENV
 
-      - name: Try new way
-        if: github.event.base.repo.updated_at <= env.datelimit
-        run:
-          echo "run empty commit"
-
-      - name: Try all in 1
-        if: github.event.created_at >= github.event.base.repo.updated_at
-        run:
-          echo "yes please"
-
-      - name: Try all in 1 but this should fail
-        if: github.event.created_at < github.event.base.repo.updated_at
-        run:
-          echo "Oh no :("
-
-      - name: Try new way
-        if: github.event.base.repo.updated_at <= env.datelimit
-        run:
-          echo "run empty commit"
-
       - name: Get date from 2 days ago
         run: |
           datethen2=`date -d "-50 days" --utc +%FT%TZ`
           echo "datelimit=$datethen2" >> $GITHUB_ENV
 
-      - name: Try new way
-        if: github.event.base.repo.updated_at <= env.datelimit2
-        run:
-          echo "run empty commit (should trigger)"
-
-      - name: Set flag if last commit is more than 50 days old
-
-        run: |
-          echo "${{ github.event.created_at }}"
-          echo "${{ github.event.base.repo.updated_at }}"
-
-          echo ${{ github.event.created_at }} - ${{ github.event.base.updated_at }}
-
-          # condition=`date -d "-50 days"`
-          # echo "${COMMIT_DATE}"
-          # echo $condition
-
-          # if [ ${COMMIT_DATE} -le $condition ];
-          # then
-          #   echo "flag=true" >> $GITHUB_ENV
-          #   echo "flag set to true"
-          # else
-          #   echo "flag=false" >> $GITHUB_ENV
-          #   echo "flag set to false"
-          # fi
-
       - name: setup git config
-        if: env.flag
+        if: github.event.base.repo.updated_at <= env.datelimit2
         run: |
           # setup the username and email.
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
 
       - name: commit
-        if: env.flag
+        if: github.event.base.repo.updated_at <= env.datelimit2
         run: |
           git commit -m "Empty commit to keep the gihub workflows alive" --allow-empty
           git push origin master
