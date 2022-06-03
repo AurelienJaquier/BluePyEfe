@@ -1,8 +1,7 @@
 name: Test
 
 on:
-  # uncomment this before merging
-  # pull_request:
+  pull_request:
   # allows this workflow to be reusable (e.g. by the build workflow)
   workflow_call:
 

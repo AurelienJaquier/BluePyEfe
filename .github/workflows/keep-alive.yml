@@ -1,16 +1,15 @@
 name: Keep-alive
 
 on:
-  # remove this before merging
-  pull_request:
+
   schedule:
     # Runs every sunday at 3 a.m.
-    - cron: '0 3 * * SUN'
+    # Reset to '0 3 * * SUN' before MR
+    - cron: '0 13 * * FRI'
 
 jobs:
-  # uncommmment this before merging
-  # call-test-workflow:
-  #   uses: BlueBrain/BluePyEfe/.github/workflows/test.yml@master
+  call-test-workflow:
+    uses: BlueBrain/BluePyEfe/.github/workflows/test.yml@master
   
   keep-workflow-alive:
     name: Keep workflow alive
@@ -25,9 +24,9 @@ jobs:
           datethen=`date -d "-50 days" --utc +%FT%TZ`
           echo "datelimit=$datethen" >> $GITHUB_ENV
 
-      - name: Get date from 2 days ago
+      - name: Get date from 1 hour ago
         run: |
-          datethen2=`date -d "-50 days" --utc +%FT%TZ`
+          datethen2=`date -d "-1 hour" --utc +%FT%TZ`
           echo "datelimit=$datethen2" >> $GITHUB_ENV
 
       - name: setup git config
